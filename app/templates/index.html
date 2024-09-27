@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Wordly{% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" href="/static/css/index.css" />
+{% endblock %}
+
+{% block content %}
+  <main class="h-100 d-flex flex-column justify-content-center align-items-center">
+    <h1 class="mb-3">Wordly</h1>
+    <div id="game"></div>
+  </main>
+{% endblock %}
+
+{% block js %}
+  <script src="/static/js/index.js" type="module" defer></script>
+{% endblock %}
