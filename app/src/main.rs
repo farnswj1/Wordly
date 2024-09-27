@@ -9,6 +9,7 @@ use std::net::SocketAddr;
 use axum::extract::connect_info::IntoMakeServiceWithConnectInfo;
 use axum::http::HeaderValue;
 use axum::{http::Method, routing::get, serve, Router};
+use axum_client_ip::SecureClientIpSource;
 use config::Config;
 use dotenvy::dotenv;
 use routes::{not_found, root, ws_handler};
@@ -32,6 +33,7 @@ async fn get_router(config: &Config) -> IntoMakeServiceWithConnectInfo<Router, S
     let serve_dir = ServeDir::new("static");
 
     Router::new()
+        .layer(SecureClientIpSource::RightmostXForwardedFor.into_extension())
         .layer(TraceLayer::new_for_http())
         .layer(cors)
         .route("/", get(root))

@@ -1,7 +1,6 @@
-use std::net::SocketAddr;
-
 use askama_axum::IntoResponse;
-use axum::extract::{ConnectInfo, WebSocketUpgrade};
+use axum::extract::WebSocketUpgrade;
+use axum_client_ip::InsecureClientIp;
 
 use crate::{templates::{IndexTemplate, NotFoundTemplate}, websockets::handle_socket};
 
@@ -15,7 +14,7 @@ pub async fn not_found() -> NotFoundTemplate {
 
 pub async fn ws_handler(
     ws: WebSocketUpgrade,
-    ConnectInfo(addr): ConnectInfo<SocketAddr>,
+    InsecureClientIp(ip): InsecureClientIp,
 ) -> impl IntoResponse {
-    ws.on_upgrade(move |socket| handle_socket(socket, addr))
+    ws.on_upgrade(move |socket| handle_socket(socket, ip.to_string()))
 }

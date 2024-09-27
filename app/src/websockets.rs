@@ -1,4 +1,4 @@
-use std::{collections::HashSet, net::SocketAddr};
+use std::collections::HashSet;
 
 use axum::extract::ws::{Message, WebSocket};
 use rand::{seq::SliceRandom, thread_rng};
@@ -7,7 +7,7 @@ use tracing::{error, info};
 
 use crate::data::WORDS;
 
-pub async fn handle_socket(mut socket: WebSocket, who: SocketAddr) {
+pub async fn handle_socket(mut socket: WebSocket, who: String) {
     let word = WORDS.choose(&mut thread_rng()).unwrap().to_string();
     info!("Word for {who} -> {word}");
 
