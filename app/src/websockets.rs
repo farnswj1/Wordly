@@ -1,4 +1,4 @@
-use std::collections::HashSet;
+use std::{collections::HashSet, sync::LazyLock};
 
 use axum::extract::ws::{Message, WebSocket};
 use rand::{seq::SliceRandom, thread_rng};
@@ -7,11 +7,12 @@ use tracing::{error, info};
 
 use crate::data::WORDS;
 
+static RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"^[a-z]{5}$").unwrap());
+
 pub async fn handle_socket(mut socket: WebSocket, who: String) {
     let word = WORDS.choose(&mut thread_rng()).unwrap().to_string();
     info!("Word for {who} -> {word}");
 
-    let re = Regex::new(r"^[a-z]{5}$").unwrap();
     let mut num_attempts: u8 = 0;
     let mut letters = HashSet::new();
 
@@ -38,7 +39,7 @@ pub async fn handle_socket(mut socket: WebSocket, who: String) {
         let msg = message.unwrap();
         if let Message::Text(guess) = msg {
             // The guess must be alphabetical and 5 letters long.
-            if !re.is_match(&guess) {
+            if !RE.is_match(&guess) {
                 let response = "invalid:The word must be 5 letters long.".to_string();
                 if let Err(error) = socket.send(Message::Text(response)).await {
                     error!("Failed to send message to {who}: {error}");
