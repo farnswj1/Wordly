@@ -46,7 +46,7 @@ fn get_router(config: &Config) -> IntoMakeServiceWithConnectInfo<Router, SocketA
 #[tokio::main]
 async fn main() {
     dotenv().ok();
-    tracing_subscriber::fmt().with_max_level(tracing::Level::DEBUG).init();
+    tracing_subscriber::fmt().with_max_level(tracing::Level::INFO).init();
 
     let config = envy::from_env::<Config>().unwrap();
     let router = get_router(&config);
