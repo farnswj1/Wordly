@@ -82,6 +82,7 @@ pub async fn handle_socket(mut socket: WebSocket, who: String) {
             // Close the socket if the user correctly guessed the word.
             // Otherwise, increment the number of attempts by 1.
             num_attempts += 1;
+
             if guess == word {
                 info!("{who} correctly guessed the word in {num_attempts} attempt(s).");
                 return;
