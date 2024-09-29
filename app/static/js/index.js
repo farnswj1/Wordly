@@ -40,18 +40,17 @@ const initBoard = () => {
   keyboard.classList = "w-100";
 
   // Set up keyboard
-  const keyboardRows = ["first", "second", "third"];
   const keys = [
     ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
     ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
     ["Enter", "Z", "X", "C", "V", "B", "N", "M", "Del"]
   ];
 
-  for (let i = 0; i < 3; i++) {
+  for (const key of keys) {
     const rowNode = document.createElement("div");
     rowNode.className = "d-flex flex-row justify-content-center gap-1 my-1 w-100";
 
-    for (const char of keys[i]) {
+    for (const char of key) {
       const button = document.createElement("button");
       button.className = "keyboard-button btn btn-dark flex-shrink fw-bold";
       button.innerHTML = char;
@@ -105,7 +104,7 @@ ws.addEventListener("message", (event) => {
       animateCSS(box, "flipInX");
       //shade box
       box.style.backgroundColor = letterColor[i];
-      shadeKeyBoard(box.innerHTML, letterColor[i]);
+      shadeKeyBoard(box.innerHTML.toUpperCase(), letterColor[i]);
     }, delay);
   }
 
@@ -122,7 +121,7 @@ ws.addEventListener("message", (event) => {
 
 const shadeKeyBoard = (letter, color) => {
   for (const elem of document.getElementsByTagName("button")) {
-    if (elem.textContent === letter) {
+    if (elem.innerHTML === letter) {
       let oldColor = elem.style.backgroundColor;
       if (oldColor === "green") {
         return;
@@ -133,6 +132,10 @@ const shadeKeyBoard = (letter, color) => {
       }
 
       elem.style.backgroundColor = color;
+
+      if (color === "lightgray") {
+        elem.style.color = "black";
+      }
       break;
     }
   }
