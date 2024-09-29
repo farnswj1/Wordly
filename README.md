@@ -5,6 +5,7 @@ This is a recreation of Wordle, but users are given a random word every session.
 The project uses the following:
 - Rust
 - Axum
+- Nginx
 - Docker
 - Docker Compose
 
@@ -13,7 +14,7 @@ For additional information on project specifications, see the `Cargo.toml` file 
 ### Setting up the Server
 In the `app/` directory, create a `.env` file that contains the following environment variables:
 ```
-CORS_ALLOWED_ORIGINS="http://localhost:8000 http://127.0.0.1"
+CORS_ALLOWED_ORIGINS="http://localhost http://127.0.0.1"
 ```
 
 ## Building
