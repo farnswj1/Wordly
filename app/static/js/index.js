@@ -112,7 +112,8 @@ ws.addEventListener("message", (event) => {
     toastr.success("You guessed right! Game over!");
     guessesRemaining = 0;
     return;
-  } else {
+  }
+  else {
     guessesRemaining -= 1;
     currentGuess = [];
     nextLetter = 0;

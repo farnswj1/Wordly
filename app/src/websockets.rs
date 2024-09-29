@@ -104,7 +104,8 @@ pub async fn handle_socket(mut socket: WebSocket, who: String) {
             // Need to handle close frame edge case conditionally.
             if let Some(cf) = close {
                 info!("{} sent close with code {} and reason: `{}`", who, cf.code, cf.reason);
-            } else {
+            }
+            else {
                 info!("{who} somehow sent close message without CloseFrame");
             }
             return;
