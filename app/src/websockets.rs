@@ -5,7 +5,7 @@ use rand::{seq::SliceRandom, thread_rng};
 use regex::Regex;
 use tracing::{error, info};
 
-use crate::data::WORDS;
+use crate::data::{UNUSED_WORDS, WORDS};
 
 static RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"^[a-z]{5}$").unwrap());
 
@@ -49,7 +49,8 @@ pub async fn handle_socket(mut socket: WebSocket, who: String) {
             }
 
             // The word must be in the list.
-            if !WORDS.contains(&guess.as_str()) {
+            let guess_as_str = &guess.as_str();
+            if !WORDS.contains(guess_as_str) && !UNUSED_WORDS.contains(guess_as_str) {
                 let response = "invalid:That is not a word.".to_string();
                 if let Err(error) = socket.send(Message::Text(response)).await {
                     error!("Failed to send message to {who}: {error}");
