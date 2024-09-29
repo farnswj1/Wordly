@@ -4,20 +4,31 @@ let currentGuess = [];
 let nextLetter = 0;
 const ws = new WebSocket("/ws");
 
+const handleButtonClick = (event) => {
+  let key = event.target.textContent;
+
+  if (key === "Del") {
+    key = "Backspace";
+  }
+
+  document.dispatchEvent(new KeyboardEvent("keyup", { key: key }));
+};
+
 const initBoard = () => {
   const game = document.getElementById("game");
+  game.className = "w-100";
+
   const board = document.createElement("div");
-  board.id = "game-board";
-  board.className = "d-flex flex-column align-items-center mb-3";
+  board.className = "d-flex flex-column justify-content-center align-items-center gap-1 p-2 w-100";
 
   // Set up game board
   for (let i = 0; i < NUMBER_OF_GUESSES; i++) {
     const row = document.createElement("div");
-    row.className = "letter-row";
+    row.className = "letter-row d-flex flex-row gap-1 mx-auto";
 
     for (let j = 0; j < 5; j++) {
       const box = document.createElement("div");
-      box.className = "letter-box";
+      box.className = "letter-box border-2";
       row.appendChild(box);
     }
 
@@ -26,42 +37,30 @@ const initBoard = () => {
 
   const keyboard = document.createElement("div");
   keyboard.id = "keyboard";
+  keyboard.classList = "w-100";
 
   // Set up keyboard
   const keyboardRows = ["first", "second", "third"];
   const keys = [
     ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
     ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
-    ["Del", "Z", "X", "C", "V", "B", "N", "M", "Enter"]
+    ["Enter", "Z", "X", "C", "V", "B", "N", "M", "Del"]
   ];
 
   for (let i = 0; i < 3; i++) {
     const rowNode = document.createElement("div");
-    rowNode.className = `${keyboardRows[i]}-row d-flex flex-row justify-content-center my-1`;
+    rowNode.className = "d-flex flex-row justify-content-center gap-1 my-1 w-100";
 
     for (const char of keys[i]) {
       const button = document.createElement("button");
-      button.className = "keyboard-button";
+      button.className = "keyboard-button btn btn-dark flex-shrink fw-bold";
       button.innerHTML = char;
+      button.addEventListener("click", handleButtonClick);
       rowNode.appendChild(button);
     }
 
     keyboard.appendChild(rowNode);
   }
-
-  keyboard.addEventListener("click", (e) => {
-    const target = e.target;
-    if (!target.classList.contains("keyboard-button")) {
-      return;
-    }
-
-    let key = target.textContent;
-    if (key === "Del") {
-      key = "Backspace";
-    }
-
-    document.dispatchEvent(new KeyboardEvent("keyup", { key: key }));
-  });
 
   game.appendChild(board);
   game.appendChild(keyboard);
@@ -122,7 +121,7 @@ ws.addEventListener("message", (event) => {
 });
 
 const shadeKeyBoard = (letter, color) => {
-  for (const elem of document.getElementsByClassName("keyboard-button")) {
+  for (const elem of document.getElementsByTagName("button")) {
     if (elem.textContent === letter) {
       let oldColor = elem.style.backgroundColor;
       if (oldColor === "green") {
