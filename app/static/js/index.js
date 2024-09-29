@@ -132,10 +132,7 @@ const shadeKeyBoard = (letter, color) => {
       }
 
       elem.style.backgroundColor = color;
-
-      if (color === "lightgray") {
-        elem.style.color = "black";
-      }
+      elem.style.color = "black";
       break;
     }
   }
