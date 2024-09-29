@@ -48,15 +48,17 @@ pub async fn handle_socket(mut socket: WebSocket, who: String) {
                 continue;
             }
 
-            // The word must be in the list.
+            // The word must be in either list.
             let guess_as_str = &guess.as_str();
-            if !WORDS.contains(guess_as_str) && !UNUSED_WORDS.contains(guess_as_str) {
-                let response = "invalid:That is not a word.".to_string();
-                if let Err(error) = socket.send(Message::Text(response)).await {
-                    error!("Failed to send message to {who}: {error}");
-                    return;
+            if let Err(_) = WORDS.binary_search(guess_as_str) {
+                if let Err(_) = UNUSED_WORDS.binary_search(guess_as_str) {
+                    let response = "invalid:That is not a word.".to_string();
+                    if let Err(error) = socket.send(Message::Text(response)).await {
+                        error!("Failed to send message to {who}: {error}");
+                        return;
+                    }
+                    continue;
                 }
-                continue;
             }
 
             // Calculate the results by comparing the guess to the word.
