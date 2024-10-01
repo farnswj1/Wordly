@@ -16,19 +16,17 @@ const handleButtonClick = (event) => {
 
 const initBoard = () => {
   const game = document.getElementById("game");
-  game.className = "w-100";
-
   const board = document.createElement("div");
   board.className = "d-flex flex-column justify-content-center align-items-center gap-1 p-2 w-100";
 
   // Set up game board
   for (let i = 0; i < NUMBER_OF_GUESSES; i++) {
     const row = document.createElement("div");
-    row.className = "letter-row d-flex flex-row gap-1 mx-auto";
+    row.className = "letter-row d-flex flex-row flex-grow-1 gap-1 mx-auto";
 
     for (let j = 0; j < 5; j++) {
       const box = document.createElement("div");
-      box.className = "letter-box border-2";
+      box.className = "letter-box border-2 d-flex flex-fill";
       row.appendChild(box);
     }
 
@@ -37,7 +35,7 @@ const initBoard = () => {
 
   const keyboard = document.createElement("div");
   keyboard.id = "keyboard";
-  keyboard.classList = "w-100";
+  keyboard.classList = "w-100 d-flex flex-column justify-content-center my-2";
 
   // Set up keyboard
   const keys = [
@@ -52,7 +50,15 @@ const initBoard = () => {
 
     for (const char of key) {
       const button = document.createElement("button");
-      button.className = "keyboard-button btn btn-dark flex-shrink fw-bold";
+      button.className = `
+        btn btn-dark fw-bold d-flex
+        justify-content-center align-items-center
+      `;
+
+      if (char !== "Enter" && char !== "Del") {
+        button.classList.add("flex-fill", "keyboard-button", "px-0");
+      }
+
       button.innerHTML = char;
       button.addEventListener("click", handleButtonClick);
       rowNode.appendChild(button);

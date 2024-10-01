@@ -1,3 +1,7 @@
+#game {
+  max-width: 500px;
+}
+
 .letter-box {
   border: 2px solid lightgray;
   border-radius: 3px;
@@ -17,13 +21,6 @@
   border: 2px solid black;
 }
 
-.letter-row {
-  display: flex;
-}
-
-#keyboard {
-  margin: 1rem 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.keyboard-button {
+  width: 0px;
 }
