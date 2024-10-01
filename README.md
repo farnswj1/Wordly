@@ -5,6 +5,7 @@ This is a recreation of Wordle, but users are given a random word every session.
 The project uses the following:
 - Rust
 - Axum
+- Bootstrap
 - Nginx
 - Docker
 - Docker Compose
