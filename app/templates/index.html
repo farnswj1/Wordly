@@ -7,9 +7,48 @@
 {% endblock %}
 
 {% block content %}
-  <main class="h-100 d-flex flex-column justify-content-center align-items-center p-2">
-    <h1 class="mb-3 mx-auto">Wordly</h1>
+  <header class="d-flex justify-content-between align-items-center mb-3 p-3 w-100">
+    <h1>Wordly</h1>
+    <button type="button" class="btn btn-outline-dark btn-lg" data-bs-toggle="modal" data-bs-target="#help-modal">
+      <strong>?</strong>
+    </button>
+  </header>
+  <main class="h-100 d-flex flex-column justify-content-center align-items-center p-2 mx-auto">
     <div id="game" class="w-100"></div>
+    <div class="modal fade" id="help-modal" tabindex="-1" aria-labelledby="help-modal-label" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="help-modal-label">How to play</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p class="h5 mb-3">Guess the word in 6 tries.</p>
+            <p>Each guess must be a valid 5-letter word.</p>
+            <p>The color of the tiles will change to show how close your guess was to the word.</p>
+            <ul>
+              <li>
+                A letter in the correct spot will be
+                <span class="green">green</span>.
+              </li>
+              <li>
+                A letter in the word, but in the wrong spot will be
+                <span class="yellow">yellow</span>.
+              </li>
+              <li>
+                A letter not in the word will be
+                <span class="gray">light gray</span>.
+              </li>
+            </ul>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
 {% endblock %}
 
