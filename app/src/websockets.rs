@@ -1,4 +1,4 @@
-use std::{collections::HashSet, sync::LazyLock};
+use std::{collections::HashSet, hash::RandomState, sync::LazyLock};
 
 use axum::extract::ws::{Message, WebSocket};
 use rand::{seq::SliceRandom, thread_rng};
@@ -14,11 +14,7 @@ pub async fn handle_socket(mut socket: WebSocket, who: String) {
     info!("Word for {who} -> {word}");
 
     let mut num_attempts: u8 = 0;
-    let mut letters = HashSet::new();
-
-    for letter in word.chars() {
-        letters.insert(letter);
-    }
+    let letters = HashSet::<char, RandomState>::from_iter(word.chars());
 
     while num_attempts < 6 {
         // Wait for a message from the client.
