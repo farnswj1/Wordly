@@ -7,11 +7,11 @@ edition = "2021"
 askama = { version = "0.12.1", features = ["with-axum"] }
 askama_axum = "0.4.0"
 axum = { version = "0.7.7", features = ["ws"] }
-axum-client-ip = "0.6.0"
+axum-client-ip = "0.6.1"
 dotenvy = "0.15.7"
 envy = "0.4.2"
 rand = "0.8.5"
-regex = "1.10.6"
+regex = "1.11.0"
 serde = { version = "1.0.204", features = ["derive"] }
 tokio = { version = "1.38.1", features = ["full"] }
 tower-http = { version = "0.6.1", features = ["cors", "fs", "trace"] }
