@@ -71,6 +71,10 @@ const initBoard = () => {
   game.appendChild(keyboard);
 };
 
+const showErrorNotification = () => {
+  toastr.error("The connection to the server has closed. Refresh the page to play again.");
+};
+
 ws.addEventListener("open", initBoard);
 ws.addEventListener("message", (event) => {
   const [type, message] = event.data.split(':');
@@ -125,6 +129,9 @@ ws.addEventListener("message", (event) => {
     nextLetter = 0;
   }
 });
+
+ws.addEventListener("error", showErrorNotification)
+ws.addEventListener("close", showErrorNotification)
 
 const shadeKeyBoard = (letter, color) => {
   for (const elem of document.getElementsByTagName("button")) {
