@@ -72,7 +72,9 @@ const initBoard = () => {
 };
 
 const showErrorNotification = () => {
-  toastr.error("The connection to the server has closed. Refresh the page to play again.");
+  if (guessesRemaining > 0) {
+    toastr.error("The connection to the server has closed. Refresh the page to play again.");
+  }
 };
 
 ws.addEventListener("open", initBoard);
@@ -130,8 +132,8 @@ ws.addEventListener("message", (event) => {
   }
 });
 
-ws.addEventListener("error", showErrorNotification)
-ws.addEventListener("close", showErrorNotification)
+ws.addEventListener("error", showErrorNotification);
+ws.addEventListener("close", showErrorNotification);
 
 const shadeKeyBoard = (letter, color) => {
   for (const elem of document.getElementsByTagName("button")) {
