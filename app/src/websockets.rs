@@ -89,7 +89,7 @@ pub async fn handle_socket(mut socket: WebSocket, who: String) {
             }
             else if num_attempts == 6 {
                 // Send the words to the client if the client runs out the attempts.
-                let response = format!("final:{}", word);
+                let response = format!("final:{word}");
                 if let Err(error) = socket.send(Message::Text(response)).await {
                     error!("Failed to send final message to {who}: {error}");
                 }
@@ -99,7 +99,7 @@ pub async fn handle_socket(mut socket: WebSocket, who: String) {
         else if let Message::Close(close) = msg {
             // Need to handle close frame edge case conditionally.
             if let Some(cf) = close {
-                info!("{} sent close with code {} and reason: `{}`", who, cf.code, cf.reason);
+                info!("{who} sent close with code {} and reason: `{}`", cf.code, cf.reason);
             }
             else {
                 info!("{who} somehow sent close message without CloseFrame");
