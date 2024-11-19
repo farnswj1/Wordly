@@ -17,6 +17,7 @@ use tokio::net::TcpListener;
 use tower_http::cors::CorsLayer;
 use tower_http::services::ServeDir;
 use tower_http::trace::TraceLayer;
+use tracing::info;
 
 fn get_router(config: &Config) -> IntoMakeServiceWithConnectInfo<Router, SocketAddr> {
     let origins = config.cors_allowed_origins
@@ -52,6 +53,6 @@ async fn main() {
     let router = get_router(&config);
     let listener = TcpListener::bind("0.0.0.0:8000").await.unwrap();
 
-    println!("LISTENING on 0.0.0.0:8000");
+    info!("LISTENING on 0.0.0.0:8000");
     serve(listener, router).await.unwrap();
 }
